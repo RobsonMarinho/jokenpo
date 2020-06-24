@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -26,13 +27,15 @@ public class MainActivity extends AppCompatActivity {
         this.opcaoSelecionada("Tesoura");
     }
 
-    public void opcaoSelecionada(String opcaoSelecionada){
+    public void opcaoSelecionada(String escolhaUsuario){
         ImageView imagemResultado = findViewById(R.id.imageResultado); //captura o componente da tela e retorna
-        int numero = new Random().nextInt(3); //Gera números "0, 1 e 2"
-        String[] opcoes = {"Pedra", "Papel", "Tesoura"};
-        String opcaoApp = opcoes[ numero ];
+        TextView textoResultado = findViewById(R.id.textResultado);
 
-        switch ( opcaoApp){
+        int numero = new Random().nextInt(3); //Gera números "0, 1 e 2"]
+        String[] opcoes = {"Pedra", "Papel", "Tesoura"};
+        String escolhaApp = opcoes[ numero ];
+
+        switch ( escolhaApp){
             case "Pedra" :
                 imagemResultado.setImageResource(R.drawable.pedra);
                 break;
@@ -44,7 +47,21 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        System.out.println("Item clicado: " + opcaoApp);
+        if(//App ganhador
+            (escolhaApp == "Tesoura" && escolhaUsuario == "Papel") ||
+            (escolhaApp == "Papel" && escolhaUsuario == "Pedra"  ) ||
+            (escolhaApp == "Pedra" && escolhaUsuario == "Tesoura")
+        ) {
+            textoResultado.setText("Você perdeu :(");
+        }else if(//Usuario ganhador
+            (escolhaUsuario == "Tesoura" && escolhaApp == "Papel") ||
+            (escolhaUsuario == "Papel" && escolhaApp == "Pedra"  ) ||
+            (escolhaUsuario == "Pedra" && escolhaApp == "Tesoura")
+        ) {
+            textoResultado.setText("Você Ganhou ;) ");
+        }else{//Empate
+            textoResultado.setText("Empatamos :)");
+        }
 
     }
 }
